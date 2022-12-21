@@ -41,25 +41,21 @@ export class EmployeeServices{
             Salary : 2345678
         },
     ]
-
     insertEmployee(Name: string, Job : string, Salary : number){
         const id = this.employee[this.employee.length-1].id + 1
         const newEmployee = new Employee(id,Name,Job,Salary);
         this.employee.push(newEmployee);
         return id;
     }
-
     getEmployee(){
         return [...this.employee];
     }
-
     edit(id:number){
         return this.employee.find((el) => {
             if(el.id == id)
                 return el;
         })
     }
-
     update(id : number, Name: string, Job : string, Salary: number){
         return this.employee.findIndex((el)=>{
             if(el.id == id){

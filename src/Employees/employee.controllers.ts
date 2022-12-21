@@ -1,16 +1,16 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Get, Param, Post, Put } from "@nestjs/common";
+import { Controller, UseGuards, Request } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { EmployeeServices } from "./employee.services";
 
 @Controller("Employee")
-
 export class EmployeeController{
     constructor(private readonly employeeService : EmployeeServices){}
-
+    @UseGuards(AuthGuard("jwt"))
     @Get()
-    getEmployees(){
+    getEmployees(@Request()req:any): any{
         return this.employeeService.getEmployee();
     }
-
     @Post()
     insertEmployees(
         @Body("Name") Name : string,
@@ -25,12 +25,10 @@ export class EmployeeController{
             Salary : Salary
         }
     }
-
     @Get(":id")
     editEmployee(@Param("id") id : number){
         return this.employeeService.edit(id);
     }
-
     @Put(":id")
     updateEmployee(
         @Param("id") id : number,
