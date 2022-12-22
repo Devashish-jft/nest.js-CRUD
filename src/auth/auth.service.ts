@@ -42,8 +42,10 @@ login(dto: AuthDto){
     const emp = this.signInData.find((el)=> el.email == dto.email);
     if(!emp) throw new UnauthorizedException ("Employee not found");
     if(emp.password != dto.password) throw new UnauthorizedException ("Password not valid");
-    // return emp;
-    return this.newToken(emp.email,emp.id)
+    const token = this.newToken(emp.email,emp.id);
+    // document.cookie = "key=token";
+    return token;
+
 }
 
 signup(dto: AuthDto){
